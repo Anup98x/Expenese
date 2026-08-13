@@ -7,6 +7,5 @@ from schema.register import RegisterCreate
 
 registerapi=APIRouter(prefix="/register",tags=["registerendpoints"])
 @registerapi.post("/") #default route
-def register_end_points(data:RegisterCreate):
+async def register_end_points(data:RegisterCreate):
  pass
-
