@@ -1,19 +1,21 @@
-from typing import Annotated
+from email.mime import base
 
-from fastapi import Depends
-from sqlalchemy.ext.asyncio import AsyncSession
+from click import echo
+from sqlalchemy.ext.asyncio import create_async_engine,async_sessionmaker
+from sqlalchemy.orm import declarative_base
+#from core.config import settings
+from Expense.core.db import SessionHandler
+from core.config import settings
 
-from core.db import get_db
-from repo.auth_repo import AuthRepo
-from repo.category_repo import CategoryRepo
-from repo.expense_repo import ExpenseRepo
-
-
-def get_auth_repo(db:Annotated[AsyncSession,Depends(get_db)] ):
-    return AuthRepo(db)
-
-def get_expense_repo(db:Annotated[AsyncSession,Depends(get_db)]):
-    return ExpenseRepo(db)
-
-def get_category_repo(db:Annotated[AsyncSession,Depends(get_db)]):
-    return CategoryRepo(db)
+#engine build
+engine=create_async_engine(settings.DATABASE_URL,echo=True)
+#session handler
+SessionHandler=async_sessionmaker(
+    bind=engine,#it gives path to datbase
+    expire_on_commit=True, #if datbase row changes then python object(Table row value also changes)
+    autoflush=False #if python object changes then database row doesnt automatically changes we need to change ourself
+)
+base=declarative_base() #base uses the property of declartive base sql alchemcy detects which class is model
+async def get_db():
+    async with SessionHandler() as db:
+        yield db
