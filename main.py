@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
-from api.registerapi import registerapi
-app=FastAPI()
-app.include_router(registerapi)
+from Expense.api.auth_api import auth_api
 
+
+app=FastAPI()
+app.include_router(auth_api)

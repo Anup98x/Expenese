@@ -5,7 +5,7 @@ import uuid
 
 from sqlalchemy.orm import Mapped, mapped_column
 
-from core.db import Base
+from Expense.core.db import Base
 
 
 class User(Base):#table for python

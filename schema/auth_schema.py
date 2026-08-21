@@ -17,7 +17,7 @@ class RegisterCreate(BaseModel):
     def format_email(cls,value:str):
         return value.lower()
     @model_validator(mode="after")
-    def format_password(cls):
-        if cls.password1!=cls.password2:
+    def format_password(self):
+        if self.password1!=self.password2:
             raise ValueError("Password not matched")
-        return cls
+        return self

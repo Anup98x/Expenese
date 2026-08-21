@@ -5,7 +5,7 @@ from sqlalchemy import DateTime, func
 from sqlalchemy.dialects.postgresql import ENUM,UUID
 from sqlalchemy.orm import Mapped,mapped_column
 
-from core.db import Base
+from Expense.core.db import Base
 
 
 
